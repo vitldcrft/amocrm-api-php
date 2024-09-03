@@ -8,6 +8,7 @@ use AmoCRM\Exceptions\InvalidArgumentException;
 use DateTimeImmutable;
 use Lcobucci\JWT\Configuration;
 use League\OAuth2\Client\Token\AccessToken;
+use Lcobucci\JWT\Signer\Key\InMemory;
 use Throwable;
 
 /**
