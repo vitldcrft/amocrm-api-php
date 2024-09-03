@@ -23,10 +23,15 @@ class LongLivedAccessToken extends AccessToken
     public function __construct(string $accessToken)
     {
         try {
-            $parsedAccessToken = Configuration::forUnsecuredSigner()->parser()->parse($accessToken);
+            $configuration = Configuration::forSymmetricSigner(
+                new \Lcobucci\JWT\Signer\Blake2b(),
+                InMemory::plainText($accessToken)
+            );
+
+            $parsedAccessToken = $configuration->parser()->parse($accessToken);
         } catch (Throwable $e) {
             throw new InvalidArgumentException(
-                'Error parsing given access token. Prev error: ' . $e->getMessage(),
+                'Error parsing given access token. Prev error: '.$e->getMessage(),
                 0,
                 [],
                 'Check access token.'
